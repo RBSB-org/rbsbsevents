@@ -1,9 +1,0 @@
-RBSB EVENTS — SIMPLIFIED VISUAL EFFECTS
-
-The advanced JavaScript motion engine and custom WebGL 3D scene system have
-been removed from the website. Pages now use simple CSS hover and focus
-transitions that are easier to understand and explain.
-
-Core website features such as Firebase authentication, bookings, the admin
-panel, EmailJS, profile image preview, and the budget planner are retained.
-Remote Unsplash images remain unchanged.
