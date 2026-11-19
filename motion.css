@@ -1,0 +1,59 @@
+/* RBSB EVENTS — simple effects and form styling */
+html { scroll-behavior: smooth; }
+body { overflow-x: hidden; }
+
+/* Simple hover effect for buttons and cards */
+button, .primary-btn, .primary-button, .secondary-btn, .secondary-button,
+.signup-button, .venue-button, .search-button, .service-card, .venue-card,
+.event-card, .category-card {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+button:hover, .primary-btn:hover, .primary-button:hover, .secondary-btn:hover,
+.secondary-button:hover, .signup-button:hover, .venue-button:hover,
+.search-button:hover, .service-card:hover, .venue-card:hover,
+.event-card:hover, .category-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Clear focus style for form fields */
+input, textarea, select { transition: border-color 0.2s ease, box-shadow 0.2s ease; }
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent, #c5a46d);
+  box-shadow: 0 0 0 3px rgba(197, 164, 109, 0.18);
+}
+
+/* Autocomplete suggestion list */
+.smart-suggest-wrap { position: relative; width: 100%; }
+.smart-suggest-list {
+  position: absolute; z-index: 1000; inset: calc(100% + 5px) 0 auto;
+  background: var(--surface, #fff); color: var(--text, #273444);
+  border: 1px solid var(--border, #ddd); border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(15,25,45,.12); padding: 6px;
+  max-height: 240px; overflow-y: auto;
+}
+.smart-suggest-list[hidden] { display: none; }
+.smart-suggest-option {
+  display: block; width: 100%; text-align: left; background: transparent;
+  color: inherit; border: 0; border-radius: 8px; padding: 10px 12px; cursor: pointer;
+}
+.smart-suggest-option:hover, .smart-suggest-option.active {
+  background: rgba(197, 164, 109, 0.18);
+}
+
+/* Phone number country selector */
+.smart-phone-row { display: flex; align-items: stretch; gap: 8px; width: 100%; }
+.smart-phone-row .smart-country-code {
+  flex: 0 0 auto; min-width: 104px; max-width: 130px;
+  border: 1px solid var(--border, #ddd); border-radius: 9px;
+  padding: 10px 8px; background: var(--surface, #fff); color: var(--text, #273444);
+}
+.smart-phone-row input[type="tel"] { flex: 1; min-width: 0; }
+
+/* Keep touch controls comfortable on phones */
+@media (hover: none) and (pointer: coarse) {
+  button, .primary-btn, .primary-button, .secondary-btn, .secondary-button { min-height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+}

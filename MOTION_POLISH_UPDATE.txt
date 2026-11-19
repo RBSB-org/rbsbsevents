@@ -1,0 +1,5 @@
+RBSB EVENTS — SIMPLE CSS POLISH
+
+The website uses basic CSS transitions for button and card hover effects,
+clear focus styles for form fields, and responsive touch-friendly controls.
+No custom WebGL scene or JavaScript animation engine is loaded.

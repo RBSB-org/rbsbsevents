@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Dashboard | EventWale</title>
+    <meta name="description" content="Your EventWale dashboard: booking requests, upcoming events and quick actions.">
+    <script src="theme-cache.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="motion.css">
+    <link rel="stylesheet" href="eclat-theme.css">
+    <link rel="stylesheet" href="lumiere-redesign.css">
+    <link rel="stylesheet" href="azure-nocturne.css">
+    <link rel="stylesheet" href="rbsb-polish.css">
+    <link rel="stylesheet" href="responsive-final.css">
+    <link rel="icon" type="image/svg+xml" href="eventwale-logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="eventwale-neon.css">
+    <link rel="stylesheet" href="eventwale-fixes.css">
+</head>
+<body>
+
+<header class="site-header">
+
+    <div class="container header-container">
+
+        <a href="index.html" class="logo ew-logo" aria-label="EventWale home"><svg class="ew-mark" viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="16" fill="#b8f03c"/><rect x="14" y="19" width="36" height="31" rx="7" fill="none" stroke="#0b1004" stroke-width="4.5"/><path d="M22 13v10M42 13v10M14 29h36" stroke="#0b1004" stroke-width="4.5" stroke-linecap="round"/><path d="M24 40l6 6 11-12" fill="none" stroke="#0b1004" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="ew-word">EVENT<b>WALE</b></span></a>
+
+        <nav class="main-navigation" aria-label="Main navigation">
+
+            <a href="index.html" class="nav-link">Home</a>
+            <a href="events.html" class="nav-link">Events</a>
+            <a href="venues.html" class="nav-link">Venues</a>
+            <a href="services.html" class="nav-link">Services</a>
+            <a href="budget.html" class="nav-link">Budget Planner</a>
+            <a href="about.html" class="nav-link">About Us</a>
+            <a href="contact.html" class="nav-link">Contact</a>
+
+        </nav>
+
+        <!-- Authentication navigation is shared across every page. -->
+        <div class="header-actions">
+            <span class="auth-loading">Checking account...</span>
+        </div>
+    </div>
+
+</header>
+
+<main class="ew-dash" id="dashRoot">
+
+    <!-- Shown while Firebase checks the session -->
+    <div class="ew-empty" id="dashLoading">Loading your dashboard&hellip;</div>
+
+    <!-- Shown to visitors who are not logged in -->
+    <section class="ew-gate" id="dashGate" hidden>
+        <h1>Login <em>required</em></h1>
+        <p>Please log in to see your bookings and manage your events.</p>
+        <div class="row">
+            <a class="primary-btn" href="login.html">Login</a>
+            <a class="secondary-btn" href="signup.html">Create account</a>
+        </div>
+    </section>
+
+    <!-- The actual dashboard -->
+    <div id="dashContent" hidden>
+        <div class="ew-dash-hero">
+            <img id="dashAvatar" alt="Your profile picture" width="84" height="84">
+            <div>
+                <span class="eyebrow">Customer dashboard</span>
+                <h1 id="dashGreeting">Welcome back</h1>
+                <p id="dashEmail"></p>
+            </div>
+        </div>
+
+        <div class="ew-stats" id="dashStats">
+            <div class="ew-stat"><small>Total requests</small><strong id="statTotal">0</strong></div>
+            <div class="ew-stat"><small>Pending</small><strong id="statPending">0</strong></div>
+            <div class="ew-stat"><small>Approved</small><strong id="statApproved">0</strong></div>
+            <div class="ew-stat"><small>Upcoming events</small><strong id="statUpcoming">0</strong></div>
+        </div>
+
+        <div class="ew-quick">
+            <a href="booking.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="16" rx="3"/><path d="M8 3v4M16 3v4M3 10h18M9 15l2 2 4-4"/></svg></span><span><strong>Book an event</strong><span class="d">Send a new booking request</span></span></a>
+            <a href="my-booking.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M9 6h11M9 12h11M9 18h11"/><circle cx="4.5" cy="6" r="1.2"/><circle cx="4.5" cy="12" r="1.2"/><circle cx="4.5" cy="18" r="1.2"/></svg></span><span><strong>My bookings</strong><span class="d">Track, edit or cancel requests</span></span></a>
+            <a href="budget.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M14.8 9.2c-.5-.8-1.5-1.2-2.8-1.2-1.7 0-2.8.8-2.8 2s1 1.7 2.8 2 2.8.8 2.8 2-1.1 2-2.8 2c-1.4 0-2.4-.5-3-1.4M12 6v2M12 16v2"/></svg></span><span><strong>Budget planner</strong><span class="d">Split your event budget</span></span></a>
+            <a href="venues.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.2 7-11.5A7 7 0 0 0 5 9.5C5 14.800 12 21 12 21z"/><circle cx="12" cy="9.5" r="2.5"/></svg></span><span><strong>Browse venues</strong><span class="d">Find the perfect location</span></span></a>
+            <a href="services.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.200 1.800L12 17l-1.800-5.200L5 10l5.200-1.800zM18.500 16l.8 2.200 2.200.8-2.200.8-.8 2.200-.8-2.200-2.200-.8 2.200-.8z"/></svg></span><span><strong>Event services</strong><span class="d">Decor, catering, music &amp; more</span></span></a>
+            <a href="profile.html"><span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4.500 20c.8-4 3.700-6 7.500-6s6.700 2 7.500 6"/></svg></span><span><strong>My profile</strong><span class="d">Update your account details</span></span></a>
+        </div>
+
+        <h2 class="ew-h">Recent <em>bookings</em></h2>
+        <div class="table-wrapper">
+            <table>
+                <thead>
+                    <tr><th>Event</th><th>Type</th><th>Date</th><th>Guests</th><th>Status</th></tr>
+                </thead>
+                <tbody id="dashBookings">
+                    <tr><td colspan="5" class="empty-cell">Loading&hellip;</td></tr>
+                </tbody>
+            </table>
+        </div>
+        <p id="dashMessage" class="ew-msg" role="status" aria-live="polite"></p>
+    </div>
+</main>
+
+<footer class="site-footer reference-footer">
+  <div class="footer-content reference-footer-grid">
+    <div class="footer-brand reference-footer-contact">
+      <a href="index.html" class="footer-logo ew-logo" aria-label="EventWale home"><svg class="ew-mark" viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="16" fill="#b8f03c"/><rect x="14" y="19" width="36" height="31" rx="7" fill="none" stroke="#0b1004" stroke-width="4.5"/><path d="M22 13v10M42 13v10M14 29h36" stroke="#0b1004" stroke-width="4.5" stroke-linecap="round"/><path d="M24 40l6 6 11-12" fill="none" stroke="#0b1004" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="ew-word">EVENT<b>WALE</b></span></a>
+      <p>Your ideas, our inspiration. Let's make every celebration memorable.</p>
+      <a class="footer-contact-item" href="contact.html"><span aria-hidden="true">✆</span> Contact our team</a>
+    </div>
+    <div class="footer-column">
+      <h3>Services</h3>
+      <a href="services.html">Event Services</a>
+      <a href="venues.html">Venue Discovery</a>
+      <a href="events.html">Event Inspiration</a>
+      <a href="budget.html">Budget Planning</a>
+    </div>
+    <div class="footer-column">
+      <h3>Quick Links</h3>
+      <a href="about.html">About Us</a>
+      <a href="events.html">Explore Events</a>
+      <a href="booking.html">Book an Event</a>
+      <a href="contact.html">Get in Touch</a>
+    </div>
+    <div class="footer-column">
+      <h3>Privacy &amp; Info</h3>
+      <a href="contact.html">Contact &amp; Support</a>
+      <a href="profile.html">Account</a>
+      <a href="login.html">Sign In</a>
+      <a href="signup.html">Create Account</a>
+    </div>
+    <div class="footer-column reference-follow">
+      <h3>Follow Us</h3>
+      <a class="reference-social" href="" aria-label="Facebook">
+        <b aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M13.5 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.2v2.2H7.7V13h2.7v8z"/></svg></b> Facebook
+      </a>
+      <a class="reference-social" href="" aria-label="LinkedIn">
+        <b aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M5.2 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.5 9h3.4v11.5H3.5zM9 9h3.3v1.6h.1A3.6 3.6 0 0 1 15.7 8c3.5 0 4.2 2.3 4.2 5.3v7.2h-3.4v-6.4c0-1.5 0-3.4-2.1-3.4s-2.4 1.6-2.4 3.3v6.5H9z"/></svg></b> LinkedIn
+      </a>
+      <a class="reference-social" href="" aria-label="X / Twitter">
+        <b aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 14.6 5.6 22H2.4l7.3-8.4L1.8 2h6.5l4.5 6.7zm-1.1 18h1.7L7.3 3.9H5.5z"/></svg></b> X / Twitter
+      </a>
+      <a class="reference-social" href="https://www.instagram.com/rbsbevents_official?dlrf=MWp3cmkyNThhZHd0cQ==" aria-label="Instagram">
+        <b aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.7" cy="6.5" r="1.2" fill="currentColor"/></svg></b> Instagram
+      </a>
+      <a class="reference-social" href="https://youtube.com/@rbsb-org?si=uAz4luoM7JbgVJlX" aria-label="YouTube">
+        <b aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8M9.6 15.6V8.4l6.3 3.6z"/></svg></b> YouTube
+      </a>
+    </div>
+  </div>
+  <div class="reference-footer-bottom">
+    <span class="footer-mark"><strong>E</strong> EVENTWALE</span>
+    <p>© 2026 RBSB organisation. Created as a student web-development project.</p>
+  </div>
+</footer>
+
+<script type="module" src="auth-nav.js"></script>
+<script type="module">
+    import { auth, db } from "./firebase.js";
+    import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+    import { ref, get } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-database.js";
+
+    const $ = id => document.getElementById(id);
+    const FALLBACK_AVATAR = "data:image/svg+xml," + encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect width="100" height="100" rx="50" fill="#1d1810"/><circle cx="50" cy="36" r="18" fill="#b8f03c"/><path d="M16 92c3-22 16-33 34-33s31 11 34 33" fill="#b8f03c"/></svg>');
+
+    function escapeHTML(value) {
+        return String(value ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+    }
+
+    function formatDate(value) {
+        const d = new Date(value + "T00:00:00");
+        return isNaN(d) ? "Not specified" : d.toLocaleDateString("en-IN", { day: "numeric", month: "short", year: "numeric" });
+    }
+
+    function getStatus(booking) {
+        const s = String(booking.status || "pending").toLowerCase();
+        return ["pending", "approved", "rejected"].includes(s) ? s : "pending";
+    }
+
+    function show(which) {
+        $("dashLoading").hidden = which !== "loading";
+        $("dashGate").hidden = which !== "gate";
+        $("dashContent").hidden = which !== "content";
+    }
+
+    async function render(user) {
+        const name = user.displayName || (user.email ? user.email.split("@")[0] : "there");
+        $("dashGreeting").innerHTML = "Welcome back, <em>" + escapeHTML(name.split(" ")[0]) + "</em>";
+        $("dashEmail").textContent = user.email || "";
+
+        let avatar = null;
+        try { avatar = localStorage.getItem("rbsb_profile_picture_" + user.uid); } catch (_) {}
+        const img = $("dashAvatar");
+        img.onerror = () => { img.onerror = null; img.src = FALLBACK_AVATAR; };
+        img.src = avatar || user.photoURL || FALLBACK_AVATAR;
+
+        show("content");
+
+        const body = $("dashBookings");
+        try {
+            const snapshot = await get(ref(db, `bookings/${user.uid}`));
+            const bookings = [];
+            if (snapshot.exists()) snapshot.forEach(child => { bookings.push({ ...child.val(), bookingId: child.key }); });
+            bookings.sort((a, b) => (Number(b.createdAt) || 0) - (Number(a.createdAt) || 0));
+
+            const today = new Date().toISOString().slice(0, 10);
+            $("statTotal").textContent = bookings.length;
+            $("statPending").textContent = bookings.filter(b => getStatus(b) === "pending").length;
+            $("statApproved").textContent = bookings.filter(b => getStatus(b) === "approved").length;
+            $("statUpcoming").textContent = bookings.filter(b => getStatus(b) !== "rejected" && String(b.eventDate || "") >= today).length;
+
+            if (!bookings.length) {
+                body.innerHTML = '<tr><td colspan="5" class="empty-cell">No bookings yet. <a href="booking.html">Book your first event</a>.</td></tr>';
+                return;
+            }
+
+            body.innerHTML = bookings.slice(0, 6).map(b => {
+                const status = getStatus(b);
+                return `<tr>
+                    <td>${escapeHTML(b.eventName || "Event booking")}</td>
+                    <td>${escapeHTML(b.eventType || "—")}</td>
+                    <td>${escapeHTML(formatDate(b.eventDate))}</td>
+                    <td>${escapeHTML(b.guestCount ?? "—")}</td>
+                    <td><span class="status ${status}">${status.charAt(0).toUpperCase() + status.slice(1)}</span></td>
+                </tr>`;
+            }).join("");
+            if (bookings.length > 6) $("dashMessage").innerHTML = 'Showing your latest 6 of ' + bookings.length + ' requests. <a class="ew-link" href="my-booking.html">View all</a>';
+        } catch (error) {
+            console.error("Unable to load bookings:", error);
+            body.innerHTML = '<tr><td colspan="5" class="empty-cell">We couldn\'t load your bookings right now.</td></tr>';
+            $("dashMessage").textContent = error.code === "PERMISSION_DENIED"
+                ? "Access denied. Please check your Firebase Database Rules."
+                : "Please check your connection and try again.";
+        }
+    }
+
+    onAuthStateChanged(auth, user => {
+        if (user) render(user); else show("gate");
+    });
+</script>
+<script type="module" src="./site-theme.js"></script>
+<script src="smart-enhancements.js" defer></script>
+<script src="mobile-nav.js" defer></script>
+<script src="image-fallback.js" defer></script>
+</body>
+</html>
