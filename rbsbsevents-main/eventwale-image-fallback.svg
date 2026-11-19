@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 520" preserveAspectRatio="xMidYMid slice">
+<defs>
+<radialGradient id="g" cx="50%" cy="85%" r="75%"><stop offset="0" stop-color="#b8f03c" stop-opacity=".45"/><stop offset=".55" stop-color="#4f7a10" stop-opacity=".18"/><stop offset="1" stop-color="#0a0d07" stop-opacity="0"/></radialGradient>
+<linearGradient id="b" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#14170d"/><stop offset="1" stop-color="#0a0d07"/></linearGradient>
+</defs>
+<rect width="800" height="520" fill="url(#b)"/><rect width="800" height="520" fill="url(#g)"/>
+<g fill="none" stroke="#b8f03c" stroke-opacity=".55" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" transform="translate(340 190)">
+<rect x="0" y="12" width="120" height="104" rx="16"/><path d="M0 46h120M32 0v26M88 0v26"/><path d="M34 82l18 18 36-38"/>
+</g>
+<text x="400" y="365" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="26" font-weight="700" fill="#b8f03c" fill-opacity=".8" letter-spacing="6">EVENTWALE</text>
+</svg>

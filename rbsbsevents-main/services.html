@@ -1,0 +1,778 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Event Services | EVENTWALE</title>
+
+    <meta name="description"
+        content="Explore event decoration, catering, photography, entertainment and event planning services with EVENTWALE.">
+
+    <script src="theme-cache.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="motion.css">
+
+    <link rel="stylesheet" href="eclat-theme.css">
+    <link rel="stylesheet" href="lumiere-redesign.css">
+    <link rel="stylesheet" href="azure-nocturne.css">
+    <link rel="stylesheet" href="rbsb-polish.css">
+    <link rel="stylesheet" href="responsive-final.css">
+    <link rel="icon" type="image/svg+xml" href="eventwale-logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="eventwale-neon.css">
+    <link rel="stylesheet" href="eventwale-fixes.css?v=20261119c">
+<style id="ew-fixes-inline">
+/* EventWale — layout & image fixes (loaded LAST on every page) */
+
+/* 1. Hero headings / paragraphs: truly centred on every inner page */
+html body :is(.events-hero, .venues-hero, .services-hero, .about-hero, .contact-hero, .budget-hero, .booking-hero) .container,
+html body :is(.events-hero-content, .venues-hero-content, .services-hero-content, .about-hero-content, .contact-hero-content, .budget-hero-content, .booking-hero-content) {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+html body :is(.events-hero, .venues-hero, .services-hero, .about-hero, .contact-hero, .budget-hero, .booking-hero) h1 {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+html body :is(.events-hero, .venues-hero, .services-hero, .about-hero, .contact-hero, .budget-hero, .booking-hero) p {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+html body :is(.events-hero, .venues-hero, .services-hero, .about-hero, .contact-hero, .budget-hero, .booking-hero) .breadcrumb {
+  justify-content: center !important;
+}
+
+/* 2. "SERVICE 01/02/03" label: a centred pill, not a stretched ellipse */
+html body .service-card .service-number {
+  display: block !important;
+  width: fit-content !important;
+  margin: 4px auto 14px !important;
+  padding: 7px 20px !important;
+  border-radius: 999px !important;
+  text-align: center !important;
+  line-height: 1.2 !important;
+  font-size: 12px !important;
+  letter-spacing: .16em !important;
+}
+html body .service-card .service-card-content > h3 { text-align: center; }
+
+/* 3. Contact page consent tick: sits right in front of its text */
+html body .contact-checkbox-field {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+html body .contact-checkbox-field input[type="checkbox"] {
+  flex: 0 0 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  accent-color: #b8f03c;
+  cursor: pointer;
+}
+html body .contact-checkbox-field label {
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  cursor: pointer;
+}
+
+/* 4. Images: keep a photo + dark overlay on the home "why choose" panel */
+html body .why-choose-image:not(#ew) {
+  background:
+    linear-gradient(0deg, rgba(5, 7, 4, .88), rgba(5, 7, 4, .15) 70%),
+    url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80") center / cover no-repeat,
+    url("eventwale-image-fallback.svg") center / cover no-repeat !important;
+}
+html body .why-choose-image.img-fallback:not(#ew) {
+  background: linear-gradient(0deg, rgba(5, 7, 4, .6), rgba(5, 7, 4, .1) 70%),
+    url("eventwale-image-fallback.svg") center / cover no-repeat !important;
+}
+/* photo cards that failed to load show the neon placeholder instead of a blank box */
+html body .venue-image.img-fallback,
+html body .event-card-image.img-fallback,
+html body .category-image.img-fallback,
+html body .service-image.img-fallback {
+  background: #14170d url("eventwale-image-fallback.svg") center / cover no-repeat !important;
+}
+html body :is(.venue-image, .service-image) img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* 5. "Enquire Now" / "View Service Details" buttons: label centred */
+html body .service-card :is(.service-link, .service-details-btn, .service-card-content > a) {
+  display: flex !important; align-items: center; justify-content: center; text-align: center !important;
+}
+
+/* 6. Home "Event categories" fan — stop the hover shaking.
+   Cause: on hover the card straightened, lifted ~48px and the idle float animation restarted, so the card's
+   lower edge slid out from under the cursor -> hover lost -> card dropped back -> hover again (flicker).
+   Fix: no float animation, and hover only grows the card from its bottom edge (rotation/position unchanged),
+   so the pointer always stays inside the card. */
+html body .category-grid .category-card {
+  animation: none !important;
+  transform-origin: 50% 100% !important;
+  will-change: transform;
+}
+html body .category-grid .category-card:hover,
+html body .category-grid .category-card:focus-visible,
+html body .category-grid .category-card.is-focused {
+  transform: translate(-50%, -50%) rotate(var(--deck-rotate, 0deg)) translateX(var(--deck-x, 0px)) translateY(var(--deck-y, 0px)) scale(calc(var(--deck-scale, 1) * 1.07)) !important;
+  z-index: 20 !important;
+}
+@media (max-width: 900px) {
+  html body .category-grid .category-card:hover,
+  html body .category-grid .category-card:focus-visible,
+  html body .category-grid .category-card.is-focused { transform: scale(1.03) !important; }
+}
+
+/* 7. Review stars: empty outline by default, fill + pop animation when tapped */
+html body:not(#ew) .rating-picker { gap: 8px !important; padding: 6px 12px !important; }
+html body:not(#ew) .rating-picker label {
+  font-size: 40px !important; line-height: 1.2 !important;
+  color: transparent !important;                       /* empty */
+  -webkit-text-stroke: 2px rgba(184, 240, 60, .75);
+  cursor: pointer; user-select: none;
+  transition: color .2s ease, transform .2s cubic-bezier(.3, 1.6, .5, 1), -webkit-text-stroke-color .2s ease, filter .2s ease !important;
+}
+/* hover preview: fills this star and the ones before it, slight grow */
+html body:not(#ew) .rating-picker label:hover,
+html body:not(#ew) .rating-picker label:hover ~ label {
+  color: rgba(184, 240, 60, .45) !important; -webkit-text-stroke-color: #b8f03c;
+}
+html body:not(#ew) .rating-picker label:hover { transform: scale(1.18); }
+/* selected: solid lime stars with a glow + staggered pop */
+html body:not(#ew) .rating-picker input:checked ~ label {
+  color: #b8f03c !important; -webkit-text-stroke-color: #b8f03c;
+  filter: drop-shadow(0 0 8px rgba(184, 240, 60, .6));
+  animation: ew-star-pop .45s cubic-bezier(.3, 1.6, .5, 1) both;
+}
+html body:not(#ew) .rating-picker input:checked ~ label:nth-of-type(5) { animation-delay: 0s; }
+html body:not(#ew) .rating-picker input:checked ~ label:nth-of-type(4) { animation-delay: .06s; }
+html body:not(#ew) .rating-picker input:checked ~ label:nth-of-type(3) { animation-delay: .12s; }
+html body:not(#ew) .rating-picker input:checked ~ label:nth-of-type(2) { animation-delay: .18s; }
+html body:not(#ew) .rating-picker input:checked ~ label:nth-of-type(1) { animation-delay: .24s; }
+html body:not(#ew) .rating-picker label:active { transform: scale(.9); }
+@keyframes ew-star-pop {
+  0%   { transform: scale(.6) rotate(-25deg); }
+  60%  { transform: scale(1.3) rotate(8deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body:not(#ew) .rating-picker input:checked ~ label { animation: none; }
+}
+
+</style>
+<script>console.log("%cEventWale fixes v3 loaded","color:#b8f03c;font-weight:bold")</script>
+</head>
+
+<body>
+
+    <!-- HEADER -->
+    <header class="site-header">
+        <div class="container header-container">
+
+
+        <div class="logo">
+            <a href="index.html" class="ew-logo" aria-label="EventWale home"><svg class="ew-mark" viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="16" fill="#b8f03c"/><rect x="14" y="19" width="36" height="31" rx="7" fill="none" stroke="#0b1004" stroke-width="4.5"/><path d="M22 13v10M42 13v10M14 29h36" stroke="#0b1004" stroke-width="4.5" stroke-linecap="round"/><path d="M24 40l6 6 11-12" fill="none" stroke="#0b1004" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="ew-word">EVENT<b>WALE</b></span></a>
+        </div>
+
+        <nav class="main-nav">
+            <a href="index.html">Home</a>
+            <a href="events.html">Events</a>
+            <a href="venues.html">Venues</a>
+            <a href="services.html" class="active">Services</a>
+            <a href="budget.html">Budget Planner</a>
+            <a href="about.html">About Us</a>
+            <a href="contact.html">Contact</a>
+        </nav>
+
+       <div class="header-actions">
+    <span class="auth-loading">Checking account...</span>
+</div>
+
+    
+        </div>
+    </header>
+
+
+    <!-- HERO SECTION -->
+    <section class="services-hero">
+<div class="services-hero-content">
+
+            <span class="section-tag">EVERY DETAIL MATTERS</span>
+
+            <h1>Everything You Need to Make Your Event Special</h1>
+
+            <p>
+                From beautiful decorations to delicious food and
+                unforgettable photographs, explore services for
+                every kind of celebration.
+            </p>
+
+            <a href="#services-collection" class="primary-btn">
+                Explore Our Services
+            </a>
+
+        </div>
+
+    </section>
+
+
+    <!-- INTRODUCTION -->
+    <section class="services-intro">
+
+        <span class="section-tag">PLAN WITH CONFIDENCE</span>
+
+        <h2>Your Event, Your Way</h2>
+
+        <p>
+            Every celebration is different. Discover service options
+            that can help you create an event that reflects your
+            ideas, preferences and budget.
+        </p>
+
+    </section>
+
+
+    <!-- SERVICES COLLECTION -->
+    <section class="services-collection" id="services-collection">
+
+        <div class="services-section-heading">
+
+            <span class="section-tag">OUR SERVICE CATEGORIES</span>
+
+            <h2>Explore Our Event Services</h2>
+
+            <p>
+                Choose the services you need to bring your celebration
+                to life.
+            </p>
+
+        </div>
+
+
+        <div class="services-grid">
+
+
+            <!-- SERVICE 1 -->
+            <article class="service-card">
+
+                <div class="service-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&w=800&q=72"
+                        alt="Elegant event decoration with flowers">
+
+                </div>
+
+                <div class="service-card-content">
+
+                    <span class="service-number">SERVICE 01</span>
+
+                    <h3>Event Decoration</h3>
+
+                    <p>
+                        Discover decoration ideas featuring floral
+                        arrangements, themed backdrops, elegant stages
+                        and creative event setups.
+                    </p>
+
+                    <ul>
+                        <li>Wedding decorations</li>
+                        <li>Birthday themes</li>
+                        <li>Stage and backdrop design</li>
+                    </ul>
+
+                    <a href="booking.html" class="service-link">
+                        Enquire Now →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- SERVICE 2 -->
+            <article class="service-card">
+
+                <div class="service-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1555244162-803834f70033?auto=format&fit=crop&w=800&q=72"
+                        alt="Food arranged for event catering">
+
+                </div>
+
+                <div class="service-card-content">
+
+                    <span class="service-number">SERVICE 02</span>
+
+                    <h3>Catering Services</h3>
+
+                    <p>
+                        Explore food and beverage arrangements suitable
+                        for intimate gatherings, weddings and large
+                        celebrations.
+                    </p>
+
+                    <ul>
+                        <li>Menu planning</li>
+                        <li>Buffet arrangements</li>
+                        <li>Food presentation</li>
+                    </ul>
+
+                    <a href="booking.html" class="service-link">
+                        Enquire Now →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- SERVICE 3 -->
+            <article class="service-card">
+
+                <div class="service-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=72"
+                        alt="Professional camera for event photography">
+
+                </div>
+
+                <div class="service-card-content">
+
+                    <span class="service-number">SERVICE 03</span>
+
+                    <h3>Photography</h3>
+
+                    <p>
+                        Capture the meaningful moments, candid smiles
+                        and memorable highlights of your special day.
+                    </p>
+
+                    <ul>
+                        <li>Candid photography</li>
+                        <li>Portrait sessions</li>
+                        <li>Event photo coverage</li>
+                    </ul>
+
+                    <a href="booking.html" class="service-link">
+                        Enquire Now →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- SERVICE 4 -->
+            <article class="service-card">
+
+                <div class="service-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1492619375914-88005aa9e8fb?auto=format&fit=crop&w=800&q=72"
+                        alt="Camera equipment used for event video production">
+
+                </div>
+
+                <div class="service-card-content">
+
+                    <span class="service-number">SERVICE 04</span>
+
+                    <h3>Videography</h3>
+
+                    <p>
+                        Explore video coverage options to preserve
+                        important moments and create lasting memories.
+                    </p>
+
+                    <ul>
+                        <li>Event highlight videos</li>
+                        <li>Wedding films</li>
+                        <li>Video editing</li>
+                    </ul>
+
+                    <a href="booking.html" class="service-link">
+                        Enquire Now →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- SERVICE 5 -->
+            <article class="service-card">
+
+                <div class="service-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1501386761578-eac5c94b800a?auto=format&fit=crop&w=800&q=72"
+                        alt="Live music performance at an event">
+
+                </div>
+
+                <div class="service-card-content">
+
+                    <span class="service-number">SERVICE 05</span>
+
+                    <h3>Entertainment</h3>
+
+                    <p>
+                        Make your gathering lively with entertainment
+                        ideas that suit the occasion and your guests.
+                    </p>
+
+                    <ul>
+                        <li>DJ and music</li>
+                        <li>Live performances</li>
+                        <li>Games and activities</li>
+                    </ul>
+
+                    <a href="booking.html" class="service-link">
+                        Enquire Now →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- SERVICE 6 -->
+            <article class="service-card">
+
+                <div class="service-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1507504031003-b417219a0fde?auto=format&fit=crop&w=800&q=72"
+                        alt="Decorative event lighting">
+
+                </div>
+
+                <div class="service-card-content">
+
+                    <span class="service-number">SERVICE 06</span>
+
+                    <h3>Lighting & Sound</h3>
+
+                    <p>
+                        Explore lighting and sound options that help
+                        create the right atmosphere for your celebration.
+                    </p>
+
+                    <ul>
+                        <li>Decorative lighting</li>
+                        <li>Sound systems</li>
+                        <li>Stage lighting ideas</li>
+                    </ul>
+
+                    <a href="booking.html" class="service-link">
+                        Enquire Now →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- SERVICE 7 -->
+            <article class="service-card">
+
+                <div class="service-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1527529482837-4698179dc6ce?auto=format&fit=crop&w=800&q=72"
+                        alt="Event table setting and celebration decorations">
+
+                </div>
+
+                <div class="service-card-content">
+
+                    <span class="service-number">SERVICE 07</span>
+
+                    <h3>Event Planning</h3>
+
+                    <p>
+                        Organize the details of your celebration,
+                        from schedules and coordination to event setup.
+                    </p>
+
+                    <ul>
+                        <li>Event timelines</li>
+                        <li>Planning checklists</li>
+                        <li>Event coordination</li>
+                    </ul>
+
+                    <a href="booking.html" class="service-link">
+                        Enquire Now →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+            <!-- SERVICE 8 -->
+            <article class="service-card">
+
+                <div class="service-image">
+
+                    <img
+                        src="https://images.unsplash.com/photo-1529636798458-92182e662485?auto=format&fit=crop&w=800&q=72"
+                        alt="Decorative invitation and stationery arrangement">
+
+                </div>
+
+                <div class="service-card-content">
+
+                    <span class="service-number">SERVICE 08</span>
+
+                    <h3>Invitations & Stationery</h3>
+
+                    <p>
+                        Discover invitation and stationery ideas
+                        for weddings, birthdays and other special events.
+                    </p>
+
+                    <ul>
+                        <li>Digital invitations</li>
+                        <li>Invitation card concepts</li>
+                        <li>Event stationery</li>
+                    </ul>
+
+                    <a href="booking.html" class="service-link">
+                        Enquire Now →
+                    </a>
+
+                </div>
+
+            </article>
+
+
+        </div>
+
+    </section>
+
+
+    <!-- HOW IT WORKS -->
+    <section class="services-process">
+
+        <div class="services-section-heading">
+
+            <span class="section-tag">SIMPLE & CONVENIENT</span>
+
+            <h2>How to Choose Your Services</h2>
+
+            <p>
+                A simple process to help you plan your event requirements.
+            </p>
+
+        </div>
+
+
+        <div class="services-process-grid">
+
+            <article class="services-process-card">
+
+                <span class="process-number">01</span>
+
+                <h3>Explore</h3>
+
+                <p>
+                    Browse the service categories and identify
+                    what your celebration needs.
+                </p>
+
+            </article>
+
+
+            <article class="services-process-card">
+
+                <span class="process-number">02</span>
+
+                <h3>Plan Your Budget</h3>
+
+                <p>
+                    Estimate your expenses and decide how much
+                    you want to allocate to each service.
+                </p>
+
+            </article>
+
+
+            <article class="services-process-card">
+
+                <span class="process-number">03</span>
+
+                <h3>Submit an Enquiry</h3>
+
+                <p>
+                    Share your requirements through the booking
+                    page to continue planning your event.
+                </p>
+
+            </article>
+
+        </div>
+
+    </section>
+
+
+    <!-- CUSTOM SERVICE CTA -->
+    <section class="services-custom-cta">
+
+        <div class="services-custom-content">
+
+            <span class="section-tag">YOUR CELEBRATION, YOUR CHOICE</span>
+
+            <h2>Looking for Something Special?</h2>
+
+            <p>
+                Every event is unique. Start planning your requirements
+                and explore ideas that match your celebration.
+            </p>
+
+            <div class="services-cta-buttons">
+
+                <a href="budget.html" class="primary-btn">
+                    Plan Your Budget
+                </a>
+
+                <a href="booking.html" class="secondary-btn">
+                    Start an Enquiry
+                </a>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- FOOTER -->
+    <footer class="site-footer reference-footer">
+  <div class="footer-content reference-footer-grid">
+    <div class="footer-brand reference-footer-contact">
+      <a href="index.html" class="footer-logo ew-logo" aria-label="EventWale home"><svg class="ew-mark" viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="16" fill="#b8f03c"/><rect x="14" y="19" width="36" height="31" rx="7" fill="none" stroke="#0b1004" stroke-width="4.5"/><path d="M22 13v10M42 13v10M14 29h36" stroke="#0b1004" stroke-width="4.5" stroke-linecap="round"/><path d="M24 40l6 6 11-12" fill="none" stroke="#0b1004" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="ew-word">EVENT<b>WALE</b></span></a>
+      <p>Your ideas, our inspiration. Let's make every celebration memorable.</p>
+      <a class="footer-contact-item" href="contact.html"><span aria-hidden="true">✆</span> Contact our team</a>
+    </div>
+    <div class="footer-column">
+      <h3>Services</h3>
+      <a href="services.html">Event Services</a>
+      <a href="venues.html">Venue Discovery</a>
+      <a href="events.html">Event Inspiration</a>
+      <a href="budget.html">Budget Planning</a>
+    </div>
+    <div class="footer-column">
+      <h3>Quick Links</h3>
+      <a href="about.html">About Us</a>
+      <a href="events.html">Explore Events</a>
+      <a href="booking.html">Book an Event</a>
+      <a href="contact.html">Get in Touch</a>
+    </div>
+    <div class="footer-column">
+      <h3>Privacy &amp; Info</h3>
+      <a href="contact.html">Contact &amp; Support</a>
+      <a href="profile.html">Account</a>
+      <a href="login.html">Sign In</a>
+      <a href="signup.html">Create Account</a>
+    </div>
+    <div class="footer-column reference-follow">
+      <h3>Follow Us</h3>
+      <a class="reference-social" href="" aria-label="Facebook">
+        <b aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M13.5 21v-8h2.7l.4-3.1h-3.1v-2c0-.9.3-1.5 1.6-1.5h1.7V3.6c-.3 0-1.3-.1-2.4-.1-2.4 0-4 1.5-4 4.2v2.2H7.7V13h2.7v8z"/></svg></b> Facebook
+      </a>
+      <a class="reference-social" href="" aria-label="LinkedIn">
+        <b aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M5.2 3.5a2 2 0 1 0 0 4 2 2 0 0 0 0-4M3.5 9h3.4v11.5H3.5zM9 9h3.3v1.6h.1A3.6 3.6 0 0 1 15.7 8c3.5 0 4.2 2.3 4.2 5.3v7.2h-3.4v-6.4c0-1.5 0-3.4-2.1-3.4s-2.4 1.6-2.4 3.3v6.5H9z"/></svg></b> LinkedIn
+      </a>
+      <a class="reference-social" href="" aria-label="X / Twitter">
+        <b aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M18.9 2H22l-6.8 7.8L23.2 22h-6.3L12 14.6 5.6 22H2.4l7.3-8.4L1.8 2h6.5l4.5 6.7zm-1.1 18h1.7L7.3 3.9H5.5z"/></svg></b> X / Twitter
+      </a>
+      <a class="reference-social" href="https://www.instagram.com/rbsbevents_official?dlrf=MWp3cmkyNThhZHd0cQ==" aria-label="Instagram">
+        <b aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><rect x="3" y="3" width="18" height="18" rx="5" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="4" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="17.7" cy="6.5" r="1.2" fill="currentColor"/></svg></b> Instagram
+      </a>
+      <a class="reference-social" href="https://youtube.com/@rbsb-org?si=uAz4luoM7JbgVJlX" aria-label="YouTube">
+        <b aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false"><path fill="currentColor" d="M23.5 6.2a3 3 0 0 0-2.1-2.1C19.5 3.6 12 3.6 12 3.6s-7.5 0-9.4.5A3 3 0 0 0 .5 6.2 31 31 0 0 0 0 12a31 31 0 0 0 .5 5.8 3 3 0 0 0 2.1 2.1c1.9.5 9.4.5 9.4.5s7.5 0 9.4-.5a3 3 0 0 0 2.1-2.1A31 31 0 0 0 24 12a31 31 0 0 0-.5-5.8M9.6 15.6V8.4l6.3 3.6z"/></svg></b> YouTube
+      </a>
+    </div>
+  </div>
+  <div class="reference-footer-bottom">
+    <span class="footer-mark"><strong>E</strong> EVENTWALE</span>
+    <p>© 2026 RBSB organisation. Created as a student web-development project.</p>
+  </div>
+</footer>
+<script type="module" src="auth-nav.js"></script>
+<!-- EVENTWALE GLOBAL THEME LOADER -->
+<script>
+(function () {
+    const THEME_KEY = "rbsbAdminTheme";
+
+    function loadRBSBTheme() {
+        let savedTheme;
+
+        try {
+            savedTheme = localStorage.getItem(THEME_KEY);
+        } catch (error) {
+            console.error("RBSB theme storage unavailable:", error);
+            return;
+        }
+
+        if (!savedTheme) return;
+
+        try {
+            const theme = JSON.parse(savedTheme);
+            const root = document.documentElement;
+
+            if (theme.primary) {
+                root.style.setProperty("--primary", theme.primary);
+                root.style.setProperty("--primary-color", theme.primary);
+                root.style.setProperty("--navy", theme.primary);
+                root.style.setProperty("--navy-light", theme.primary);
+            }
+
+            if (theme.accent) {
+                root.style.setProperty("--accent", theme.accent);
+                root.style.setProperty("--accent-color", theme.accent);
+                root.style.setProperty("--gold", theme.accent);
+                root.style.setProperty("--gold-light", theme.accent);
+            }
+
+            if (theme.background) {
+                root.style.setProperty("--page-bg", theme.background);
+                root.style.setProperty("--background-color", theme.background);
+                root.style.setProperty("--ivory", theme.background);
+            }
+
+        } catch (error) {
+            console.error("Could not load RBSB theme:", error);
+        }
+    }
+
+    loadRBSBTheme();
+})();
+</script>
+    <script type="module" src="./site-theme.js"></script>
+    <script src="smart-enhancements.js" defer></script>
+<script src="services-interactions.js" defer></script>
+<script src="mobile-nav.js" defer></script>
+<script src="image-fallback.js?v=20261119c" defer></script>
+</body>
+
+</html>

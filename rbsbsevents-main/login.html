@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | EventWale</title>
+    <meta name="description" content="Log in to EventWale to book events, venues and services.">
+    <link rel="icon" type="image/svg+xml" href="eventwale-logo.svg">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500;1,600&display=swap" rel="stylesheet">
+    <script src="theme-cache.js"></script>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="eventwale-neon.css">
+    <link rel="stylesheet" href="eventwale-fixes.css?v=20261119c">
+<style id="ew-fixes-inline">
+/* EventWale — layout & image fixes (loaded LAST on every page) */
+
+/* 1. Hero headings / paragraphs: truly centred on every inner page */
+html body :is(.events-hero, .venues-hero, .services-hero, .about-hero, .contact-hero, .budget-hero, .booking-hero) .container,
+html body :is(.events-hero-content, .venues-hero-content, .services-hero-content, .about-hero-content, .contact-hero-content, .budget-hero-content, .booking-hero-content) {
+  text-align: center !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+html body :is(.events-hero, .venues-hero, .services-hero, .about-hero, .contact-hero, .budget-hero, .booking-hero) h1 {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+html body :is(.events-hero, .venues-hero, .services-hero, .about-hero, .contact-hero, .budget-hero, .booking-hero) p {
+  margin-left: auto !important;
+  margin-right: auto !important;
+  text-align: center !important;
+}
+html body :is(.events-hero, .venues-hero, .services-hero, .about-hero, .contact-hero, .budget-hero, .booking-hero) .breadcrumb {
+  justify-content: center !important;
+}
+
+/* 2. "SERVICE 01/02/03" label: a centred pill, not a stretched ellipse */
+html body .service-card .service-number {
+  display: block !important;
+  width: fit-content !important;
+  margin: 4px auto 14px !important;
+  padding: 7px 20px !important;
+  border-radius: 999px !important;
+  text-align: center !important;
+  line-height: 1.2 !important;
+  font-size: 12px !important;
+  letter-spacing: .16em !important;
+}
+html body .service-card .service-card-content > h3 { text-align: center; }
+
+/* 3. Contact page consent tick: sits right in front of its text */
+html body .contact-checkbox-field {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 12px !important;
+  padding: 0 !important;
+  border: 0 !important;
+  background: transparent !important;
+}
+html body .contact-checkbox-field input[type="checkbox"] {
+  flex: 0 0 20px !important;
+  width: 20px !important;
+  height: 20px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  accent-color: #b8f03c;
+  cursor: pointer;
+}
+html body .contact-checkbox-field label {
+  flex: 1 1 auto !important;
+  margin: 0 !important;
+  font-size: 14px !important;
+  line-height: 1.5 !important;
+  cursor: pointer;
+}
+
+/* 4. Images: keep a photo + dark overlay on the home "why choose" panel */
+html body .why-choose-image:not(#ew) {
+  background:
+    linear-gradient(0deg, rgba(5, 7, 4, .88), rgba(5, 7, 4, .15) 70%),
+    url("https://images.unsplash.com/photo-1519741497674-611481863552?auto=format&fit=crop&w=1000&q=80") center / cover no-repeat,
+    url("eventwale-image-fallback.svg") center / cover no-repeat !important;
+}
+html body .why-choose-image.img-fallback:not(#ew) {
+  background: linear-gradient(0deg, rgba(5, 7, 4, .6), rgba(5, 7, 4, .1) 70%),
+    url("eventwale-image-fallback.svg") center / cover no-repeat !important;
+}
+/* photo cards that failed to load show the neon placeholder instead of a blank box */
+html body .venue-image.img-fallback,
+html body .event-card-image.img-fallback,
+html body .category-image.img-fallback,
+html body .service-image.img-fallback {
+  background: #14170d url("eventwale-image-fallback.svg") center / cover no-repeat !important;
+}
+html body :is(.venue-image, .service-image) img { display: block; width: 100%; height: 100%; object-fit: cover; }
+
+/* 5. "Enquire Now" / "View Service Details" buttons: label centred */
+html body .service-card :is(.service-link, .service-details-btn, .service-card-content > a) {
+  display: flex !important; align-items: center; justify-content: center; text-align: center !important;
+}
+
+/* 6. Home "Event categories" fan — stop the hover shaking.
+   Cause: on hover the card straightened, lifted ~48px and the idle float animation restarted, so the card's
+   lower edge slid out from under the cursor -> hover lost -> card dropped back -> hover again (flicker).
+   Fix: no float animation, and hover only grows the card from its bottom edge (rotation/position unchanged),
+   so the pointer always stays inside the card. */
+html body .category-grid .category-card {
+  animation: none !important;
+  transform-origin: 50% 100% !important;
+  will-change: transform;
+}
+html body .category-grid .category-card:hover,
+html body .category-grid .category-card:focus-visible,
+html body .category-grid .category-card.is-focused {
+  transform: translate(-50%, -50%) rotate(var(--deck-rotate, 0deg)) translateX(var(--deck-x, 0px)) translateY(var(--deck-y, 0px)) scale(calc(var(--deck-scale, 1) * 1.07)) !important;
+  z-index: 20 !important;
+}
+@media (max-width: 900px) {
+  html body .category-grid .category-card:hover,
+  html body .category-grid .category-card:focus-visible,
+  html body .category-grid .category-card.is-focused { transform: scale(1.03) !important; }
+}
+
+/* 7. Review stars: empty outline by default, fill + pop animation when tapped */
+html body:not(#ew) .rating-picker { gap: 8px !important; padding: 6px 12px !important; }
+html body:not(#ew) .rating-picker label {
+  font-size: 40px !important; line-height: 1.2 !important;
+  color: transparent !important;                       /* empty */
+  -webkit-text-stroke: 2px rgba(184, 240, 60, .75);
+  cursor: pointer; user-select: none;
+  transition: color .2s ease, transform .2s cubic-bezier(.3, 1.6, .5, 1), -webkit-text-stroke-color .2s ease, filter .2s ease !important;
+}
+/* hover preview: fills this star and the ones before it, slight grow */
+html body:not(#ew) .rating-picker label:hover,
+html body:not(#ew) .rating-picker label:hover ~ label {
+  color: rgba(184, 240, 60, .45) !important; -webkit-text-stroke-color: #b8f03c;
+}
+html body:not(#ew) .rating-picker label:hover { transform: scale(1.18); }
+/* selected: solid lime stars with a glow + staggered pop */
+html body:not(#ew) .rating-picker input:checked ~ label {
+  color: #b8f03c !important; -webkit-text-stroke-color: #b8f03c;
+  filter: drop-shadow(0 0 8px rgba(184, 240, 60, .6));
+  animation: ew-star-pop .45s cubic-bezier(.3, 1.6, .5, 1) both;
+}
+html body:not(#ew) .rating-picker input:checked ~ label:nth-of-type(5) { animation-delay: 0s; }
+html body:not(#ew) .rating-picker input:checked ~ label:nth-of-type(4) { animation-delay: .06s; }
+html body:not(#ew) .rating-picker input:checked ~ label:nth-of-type(3) { animation-delay: .12s; }
+html body:not(#ew) .rating-picker input:checked ~ label:nth-of-type(2) { animation-delay: .18s; }
+html body:not(#ew) .rating-picker input:checked ~ label:nth-of-type(1) { animation-delay: .24s; }
+html body:not(#ew) .rating-picker label:active { transform: scale(.9); }
+@keyframes ew-star-pop {
+  0%   { transform: scale(.6) rotate(-25deg); }
+  60%  { transform: scale(1.3) rotate(8deg); }
+  100% { transform: scale(1) rotate(0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  html body:not(#ew) .rating-picker input:checked ~ label { animation: none; }
+}
+
+</style>
+<script>console.log("%cEventWale fixes v3 loaded","color:#b8f03c;font-weight:bold")</script>
+</head>
+<body class="auth-page ew-auth-body">
+<div class="ew-auth">
+  <div class="ew-crowd" aria-hidden="true"></div>
+  <div class="ew-auth-top">
+    <a href="index.html" class="ew-logo" aria-label="EventWale home"><svg class="ew-mark" viewBox="0 0 64 64" aria-hidden="true"><rect x="2" y="2" width="60" height="60" rx="16" fill="#b8f03c"/><rect x="14" y="19" width="36" height="31" rx="7" fill="none" stroke="#0b1004" stroke-width="4.5"/><path d="M22 13v10M42 13v10M14 29h36" stroke="#0b1004" stroke-width="4.5" stroke-linecap="round"/><path d="M24 40l6 6 11-12" fill="none" stroke="#0b1004" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round"/></svg><span class="ew-word">EVENT<b>WALE</b></span></a>
+    <a href="index.html" class="ew-back"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M3 11l9-7 9 7M5 10v10h5v-6h4v6h5V10"/></svg> Back to Home</a>
+  </div>
+  <main class="ew-auth-grid">
+    <section class="ew-hero-side">
+      <span class="ew-pill-badge"><svg viewBox="0 0 24 24" width="18" height="18" fill="#b8f03c"><path d="m12 2 3 6.5 7 .8-5.2 4.8 1.5 7L12 17.5 5.7 21l1.5-7L2 9.3l7-.8z"/></svg> India's Smartest Event Booking Platform <span class="dot"></span></span>
+      <h1 class="ew-hero-title">Turn Moments<br>into <em>Memories</em></h1>
+      <p class="ew-hero-sub">Discover and book the best events near you &ndash; concerts, shows, workshops and more!</p>
+      <ul class="ew-perks">
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13.5 2 5 13.5h6L10 22l8.5-11.5h-6z"/></svg></span>Instant Booking</li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.5 4.5 5.5v6c0 4.7 3.1 8.6 7.5 10 4.4-1.4 7.5-5.3 7.5-10v-6z"/><path d="m8.5 12 2.7 2.7 4.5-5" fill="none" stroke="#0b1004" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>Secure &amp; Reliable</li>
+        <li><span class="ic"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="8" r="3.2"/><circle cx="5.2" cy="9.5" r="2.4"/><circle cx="18.8" cy="9.5" r="2.4"/><path d="M6.2 19c.2-3.4 2.4-5.2 5.8-5.2s5.6 1.8 5.8 5.2zM1.5 17.5c.2-2.4 1.6-3.8 3.7-3.8 1 0 1.8.3 2.4.8-1.2 1-1.9 2.4-2.1 4.2H1.5zM22.5 17.5c-.2-2.4-1.6-3.8-3.7-3.8-1 0-1.8.3-2.4.8 1.2 1 1.9 2.4 2.1 4.2h4z"/></svg></span>Unforgettable Experiences</li>
+      </ul>
+      <div class="ew-ticket-wrap" aria-hidden="true"><span class="ew-orbit"></span><svg class="ew-ticket" viewBox="0 0 300 150" aria-hidden="true">
+  <defs><filter id="tg"><feGaussianBlur stdDeviation="2.2"/></filter></defs>
+  <g fill="none" stroke="#b8f03c" stroke-linejoin="round">
+    <path d="M20 38 Q20 24 34 24 H214 V40 a10 10 0 0 0 0 20 V90 a10 10 0 0 0 0 20 V126 H34 Q20 126 20 112 V98 a10 10 0 0 0 0-20 V58 a10 10 0 0 0 0-20z" stroke-width="7" opacity=".55" filter="url(#tg)"/>
+    <path d="M20 38 Q20 24 34 24 H214 V40 a10 10 0 0 0 0 20 V90 a10 10 0 0 0 0 20 V126 H34 Q20 126 20 112 V98 a10 10 0 0 0 0-20 V58 a10 10 0 0 0 0-20z" stroke-width="3.2" fill="#0a0d07"/>
+    <path d="M214 24 H268 Q282 24 282 38 V112 Q282 126 268 126 H214" stroke-width="3.2" fill="#0a0d07"/>
+    <path d="M214 30v6M214 46v8M214 62v8M214 78v8M214 94v8M214 110v8" stroke-width="2.4" stroke-dasharray="1 7" stroke-linecap="round"/>
+  </g>
+  <path d="m248 62 4.2 8.6 9.4 1.3-6.8 6.6 1.6 9.4-8.4-4.4-8.4 4.4 1.6-9.4-6.8-6.6 9.4-1.3z" fill="none" stroke="#b8f03c" stroke-width="2.6" stroke-linejoin="round"/>
+  <path d="m52 84 3 6.2 6.8.9-5 4.8 1.2 6.7-6-3.2-6 3.2 1.2-6.7-5-4.8 6.8-.9z" fill="#b8f03c"/>
+  <text x="128" y="70" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="25" fill="#fff" letter-spacing="1">EVENT</text>
+  <text x="128" y="99" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-weight="800" font-size="25" fill="#b8f03c" letter-spacing="1">WALE</text>
+</svg></div>
+    </section>
+    <section class="ew-card" aria-label="Login">
+      <div class="ew-tabs" role="tablist">
+        <a class="ew-tab active" href="login.html" role="tab" aria-selected="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M14 4h4a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2h-4M10 8l4 4-4 4M14 12H3"/></svg> Login</a>
+        <a class="ew-tab" href="signup.html" role="tab" aria-selected="false"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="9.5" cy="8" r="3.6"/><path d="M3 20c.7-3.6 3.2-5.4 6.5-5.4s5.8 1.8 6.5 5.4M18 7v6M15 10h6"/></svg> Sign Up</a>
+      </div>
+
+      <h2>Welcome Back!</h2>
+      <p class="ew-sub">Login to continue your event journey</p>
+      <form id="loginForm" class="ew-form" novalidate>
+        <div class="ew-field"><svg class="lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="3"/><path d="m3.5 7 8.5 6 8.5-6"/></svg>
+          <input type="email" id="loginEmail" name="loginEmail" placeholder="Email Address" autocomplete="email" required>
+        </div>
+        <div class="ew-field"><svg class="lead" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="3"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/><circle cx="12" cy="15.5" r="1.2" fill="currentColor"/></svg>
+          <input type="password" id="loginPassword" name="loginPassword" placeholder="Password" autocomplete="current-password" required>
+          <button type="button" class="toggle-password" id="toggleLoginPassword" data-password-target="loginPassword" aria-label="Show password" aria-pressed="false"><svg class="eye-on" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg><svg class="eye-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3l18 18M10.6 5.1A10.6 10.6 0 0 1 12 5c6.4 0 10 7 10 7a17 17 0 0 1-3.2 4.1M6.5 6.6C3.7 8.4 2 12 2 12s3.6 7 10 7c1.7 0 3.2-.4 4.5-1M9.9 9.9a3 3 0 0 0 4.2 4.2"/></svg></button>
+        </div>
+        <div class="ew-row">
+          <label class="ew-check"><input type="checkbox" id="rememberMe" name="rememberMe" checked><span>Remember Me</span></label>
+          <a href="#forgot-password" id="forgotPasswordLink" class="ew-link">Forgot Password?</a>
+        </div>
+        <p id="loginMessage" class="ew-msg" role="status" aria-live="polite"></p>
+        <button type="submit" id="loginSubmitBtn" class="primary-btn ew-btn">Login <span aria-hidden="true">&rarr;</span></button>
+      </form>
+      <div class="ew-or"><span>or</span></div>
+      <div class="ew-social">
+        <button type="button" data-social="google" aria-label="Continue with Google" title="Continue with Google"><svg viewBox="0 0 24 24" aria-hidden="true"><path fill="#4285F4" d="M21.6 12.2c0-.7-.1-1.3-.2-1.9H12v3.8h5.4a4.6 4.6 0 0 1-2 3v2.5h3.3c1.9-1.8 2.9-4.4 2.9-7.4z"/><path fill="#34A853" d="M12 22c2.7 0 5-.9 6.7-2.4l-3.3-2.5c-.9.6-2.1 1-3.4 1-2.6 0-4.8-1.8-5.6-4.1H3v2.6A10 10 0 0 0 12 22z"/><path fill="#FBBC05" d="M6.4 13.9a6 6 0 0 1 0-3.8V7.5H3a10 10 0 0 0 0 9z"/><path fill="#EA4335" d="M12 6c1.5 0 2.8.5 3.8 1.5l2.9-2.9A10 10 0 0 0 3 7.5l3.4 2.6C7.2 7.8 9.4 6 12 6z"/></svg></button>
+        <button type="button" data-social="facebook" aria-label="Continue with Facebook" title="Continue with Facebook"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="10.5" fill="#1877F2"/><path fill="#fff" d="M13.4 21.4v-7.3h2.4l.4-2.9h-2.8V9.4c0-.8.3-1.4 1.4-1.4h1.5V5.4c-.3 0-1.2-.1-2.2-.1-2.2 0-3.7 1.3-3.7 3.8v2.1H8v2.9h2.4v7.3z"/></svg></button>
+      </div>
+
+      <p class="ew-switch">Don't have an account? <a class="ew-link" href="signup.html">Sign Up</a></p>
+      <a href="admin-login.html" class="ew-admin-link">Login via Admin &rarr;</a>
+    </section>
+  </main>
+</div>
+<script type="module">
+    import { auth } from "./firebase.js";
+    import { bindSocialButtons } from "./social-auth.js";
+    import {
+        signInWithEmailAndPassword,
+        sendPasswordResetEmail,
+        signOut,
+        setPersistence,
+        browserLocalPersistence,
+        browserSessionPersistence
+    } from "https://www.gstatic.com/firebasejs/12.5.0/firebase-auth.js";
+
+    const MESSAGE_ID = "loginMessage";
+
+    function showMessage(message, isError = true) {
+        const el = document.getElementById(MESSAGE_ID);
+        el.textContent = message;
+        el.style.color = isError ? "#ff8c7a" : "#b8f03c";
+    }
+
+    document.querySelectorAll(".toggle-password").forEach((button) => {
+        button.addEventListener("click", () => {
+            const input = document.getElementById(button.dataset.passwordTarget);
+            if (!input) return;
+            const showing = input.type === "text";
+            input.type = showing ? "password" : "text";
+            button.classList.toggle("is-shown", !showing);
+            button.setAttribute("aria-pressed", String(!showing));
+            button.setAttribute("aria-label", showing ? "Show password" : "Hide password");
+        });
+    });
+
+    const loginForm = document.getElementById("loginForm");
+    const emailInput = document.getElementById("loginEmail");
+    const passwordInput = document.getElementById("loginPassword");
+    const loginSubmitBtn = document.getElementById("loginSubmitBtn");
+    const rememberMe = document.getElementById("rememberMe");
+    const forgotPasswordLink = document.getElementById("forgotPasswordLink");
+
+    loginForm.addEventListener("submit", async (event) => {
+        event.preventDefault();
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        if (!email || !password) {
+            showMessage("Please enter your email and password.");
+            return;
+        }
+
+        loginSubmitBtn.disabled = true;
+        showMessage("Signing in...", false);
+
+        try {
+            await setPersistence(auth, rememberMe.checked ? browserLocalPersistence : browserSessionPersistence);
+            const credential = await signInWithEmailAndPassword(auth, email, password);
+
+            if (!credential.user.emailVerified) {
+                await signOut(auth);
+                showMessage("Please verify your email before logging in. Check your inbox for the verification email.");
+                return;
+            }
+
+            showMessage("Login successful! Welcome to EventWale.", false);
+            setTimeout(() => window.location.replace("index.html"), 800);
+        } catch (error) {
+            console.error("Login error:", error);
+            const code = error.code;
+            if (code === "auth/invalid-credential" || code === "auth/wrong-password" || code === "auth/user-not-found") {
+                showMessage("Incorrect email or password.");
+            } else if (code === "auth/invalid-email") {
+                showMessage("Please enter a valid email address.");
+            } else if (code === "auth/too-many-requests") {
+                showMessage("Too many attempts. Please wait and try again later.");
+            } else if (code === "auth/network-request-failed") {
+                showMessage("Network error. Check your internet connection and try again.");
+            } else {
+                showMessage("Login failed. Please try again. " + error.message);
+            }
+        } finally {
+            loginSubmitBtn.disabled = false;
+        }
+    });
+
+    forgotPasswordLink.addEventListener("click", async (event) => {
+        event.preventDefault();
+        const email = emailInput.value.trim();
+        if (!email) {
+            showMessage("Enter your email address first, then click Forgot Password.");
+            emailInput.focus();
+            return;
+        }
+        try {
+            await sendPasswordResetEmail(auth, email);
+            showMessage("If an account exists for that email, a password-reset email will be sent. Check your inbox and spam folder.", false);
+        } catch (error) {
+            console.error("Password reset error:", error);
+            showMessage(error.code === "auth/invalid-email"
+                ? "Please enter a valid email address."
+                : "Unable to request a password reset right now. Please try again later.");
+        }
+    });
+
+    bindSocialButtons({ showMessage });
+</script>
+<script type="module" src="./site-theme.js"></script>
+<script src="image-fallback.js?v=20261119c" defer></script>
+</body>
+</html>
