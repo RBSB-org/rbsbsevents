@@ -5,7 +5,8 @@
     "admins": {
       "$uid": {
         ".read": "auth != null && auth.uid === $uid",
-        ".write": false
+        ".write": false,
+        ".validate": "newData.isBoolean()"
       }
     },
     "bookings": {
@@ -21,6 +22,51 @@
           "userId": {
             ".validate": "newData.isString() && newData.val() === $uid"
           },
+          "customerName": {
+            ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 120"
+          },
+          "customerEmail": {
+            ".validate": "newData.isString() && newData.val().length <= 254"
+          },
+          "customerPhone": {
+            ".validate": "newData.isString() && newData.val().length <= 30"
+          },
+          "customerCity": {
+            ".validate": "newData.isString() && newData.val().length <= 100"
+          },
+          "eventName": {
+            ".validate": "newData.isString() && newData.val().length <= 150"
+          },
+          "eventType": {
+            ".validate": "newData.isString() && newData.val().length <= 100"
+          },
+          "eventDate": {
+            ".validate": "newData.isString() && newData.val().length <= 30"
+          },
+          "eventTime": {
+            ".validate": "newData.isString() && newData.val().length <= 50"
+          },
+          "guestCount": {
+            ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 100000"
+          },
+          "eventCity": {
+            ".validate": "newData.isString() && newData.val().length <= 100"
+          },
+          "venuePreference": {
+            ".validate": "newData.isString() && newData.val().length <= 100"
+          },
+          "preferredVenue": {
+            ".validate": "newData.isString() && newData.val().length <= 200"
+          },
+          "eventBudget": {
+            ".validate": "newData.isString() && newData.val().length <= 100"
+          },
+          "servicePreference": {
+            ".validate": "newData.isString() && newData.val().length <= 200"
+          },
+          "eventRequirements": {
+            ".validate": "newData.isString() && newData.val().length <= 5000"
+          },
           "status": {
             ".validate": "newData.val() === 'pending' || (auth != null && root.child('admins').child(auth.uid).val() === true && (newData.val() === 'approved' || newData.val() === 'rejected'))"
           },
@@ -28,40 +74,167 @@
             ".validate": "newData.val() === 'not_sent' || newData.val() === 'sent'"
           },
           "createdAt": {
-            ".validate": "newData.val() === data.val() || !data.exists()"
+            ".validate": "newData.isNumber() && (newData.val() === data.val() || !data.exists())"
           },
           "updatedAt": {
-            ".validate": "newData.exists()"
+            ".validate": "newData.isNumber()"
           },
           "$other": {
-            ".validate": true
+            ".validate": false
           }
         }
       }
     },
     "events": {
       ".read": true,
-      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$eventId": {
+        ".validate": "!newData.exists() || newData.hasChildren(['title','name','type','updatedAt'])",
+        "title": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 200"
+        },
+        "name": {
+          ".validate": "newData.isString() && newData.val().length <= 200"
+        },
+        "category": {
+          ".validate": "newData.isString() && newData.val().length <= 100"
+        },
+        "location": {
+          ".validate": "newData.isString() && newData.val().length <= 200"
+        },
+        "price": {
+          ".validate": "newData.val() === null || newData.isNumber()"
+        },
+        "description": {
+          ".validate": "newData.isString() && newData.val().length <= 10000"
+        },
+        "type": {
+          ".validate": "newData.isString() && newData.val().length <= 50"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber() && (!data.exists() || newData.val() === data.val())"
+        },
+        "updatedAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
     },
     "services": {
       ".read": true,
-      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$serviceId": {
+        ".validate": "!newData.exists() || newData.hasChildren(['title','name','type','updatedAt'])",
+        "title": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 200"
+        },
+        "name": {
+          ".validate": "newData.isString() && newData.val().length <= 200"
+        },
+        "category": {
+          ".validate": "newData.isString() && newData.val().length <= 100"
+        },
+        "location": {
+          ".validate": "newData.isString() && newData.val().length <= 200"
+        },
+        "price": {
+          ".validate": "newData.val() === null || newData.isNumber()"
+        },
+        "description": {
+          ".validate": "newData.isString() && newData.val().length <= 10000"
+        },
+        "type": {
+          ".validate": "newData.isString() && newData.val().length <= 50"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber() && (!data.exists() || newData.val() === data.val())"
+        },
+        "updatedAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
     },
     "venues": {
       ".read": true,
-      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$venueId": {
+        ".validate": "!newData.exists() || newData.hasChildren(['title','name','type','updatedAt'])",
+        "title": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 200"
+        },
+        "name": {
+          ".validate": "newData.isString() && newData.val().length <= 200"
+        },
+        "category": {
+          ".validate": "newData.isString() && newData.val().length <= 100"
+        },
+        "location": {
+          ".validate": "newData.isString() && newData.val().length <= 200"
+        },
+        "price": {
+          ".validate": "newData.val() === null || newData.isNumber()"
+        },
+        "description": {
+          ".validate": "newData.isString() && newData.val().length <= 10000"
+        },
+        "type": {
+          ".validate": "newData.isString() && newData.val().length <= 50"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber() && (!data.exists() || newData.val() === data.val())"
+        },
+        "updatedAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
     },
     "locations": {
       ".read": true,
-      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
-    },
-    "siteSettings": {
-      "theme": {
-        ".read": true,
-        ".write": "auth != null && root.child('admins').child(auth.uid).val() === true"
+      ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
+      "$locationId": {
+        ".validate": "!newData.exists() || newData.hasChildren(['title','name','type','updatedAt'])",
+        "title": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 200"
+        },
+        "name": {
+          ".validate": "newData.isString() && newData.val().length <= 200"
+        },
+        "category": {
+          ".validate": "newData.isString() && newData.val().length <= 100"
+        },
+        "location": {
+          ".validate": "newData.isString() && newData.val().length <= 200"
+        },
+        "price": {
+          ".validate": "newData.val() === null || newData.isNumber()"
+        },
+        "description": {
+          ".validate": "newData.isString() && newData.val().length <= 10000"
+        },
+        "type": {
+          ".validate": "newData.isString() && newData.val().length <= 50"
+        },
+        "createdAt": {
+          ".validate": "newData.isNumber() && (!data.exists() || newData.val() === data.val())"
+        },
+        "updatedAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "$other": {
+          ".validate": false
+        }
       }
     },
     "contactEnquiries": {
+      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
       "$enquiryId": {
         ".write": "(!data.exists() && newData.exists()) || (auth != null && root.child('admins').child(auth.uid).val() === true)",
         ".validate": "!newData.exists() || newData.hasChildren(['name','email','phone','subject','subjectKey','message','status','emailStatus','createdAt','updatedAt'])",
@@ -95,11 +268,19 @@
         "updatedAt": {
           ".validate": "newData.isNumber()"
         },
+        "emailSentAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "reviewedAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "reviewedBy": {
+          ".validate": "newData.isString() || newData.val() === null"
+        },
         "$other": {
-          ".validate": true
+          ".validate": false
         }
-      },
-      ".read": "auth != null && root.child('admins').child(auth.uid).val() === true"
+      }
     },
     "reviewSubmissions": {
       ".read": "auth != null && root.child('admins').child(auth.uid).val() === true",
@@ -127,8 +308,23 @@
         "createdAt": {
           ".validate": "newData.isNumber() && (newData.val() === data.val() || !data.exists())"
         },
+        "publishedAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "publishedBy": {
+          ".validate": "newData.isString() || newData.val() === null"
+        },
+        "publicId": {
+          ".validate": "newData.isString() && newData.val().length <= 100"
+        },
+        "moderatedAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "moderatedBy": {
+          ".validate": "newData.isString() || newData.val() === null"
+        },
         "$other": {
-          ".validate": true
+          ".validate": false
         }
       }
     },
@@ -137,7 +333,28 @@
       ".write": "auth != null && root.child('admins').child(auth.uid).val() === true",
       ".indexOn": [
         "publishedAt"
-      ]
+      ],
+      "$reviewId": {
+        ".validate": "!newData.exists() || newData.hasChildren(['name','review','rating','status','publishedAt'])",
+        "name": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 60"
+        },
+        "review": {
+          ".validate": "newData.isString() && newData.val().length > 0 && newData.val().length <= 700"
+        },
+        "rating": {
+          ".validate": "newData.isNumber() && newData.val() >= 1 && newData.val() <= 5"
+        },
+        "status": {
+          ".validate": "newData.val() === 'published'"
+        },
+        "publishedAt": {
+          ".validate": "newData.isNumber()"
+        },
+        "$other": {
+          ".validate": false
+        }
+      }
     }
   }
 }

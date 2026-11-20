@@ -241,8 +241,8 @@ a:hover { color: #dcff8a; }
 .budget-breakdown, .venue-information-card, .venue-overview-block, .venue-process-card,
 .venue-benefit-card, .venue-facility, .related-venue-card, .services-process-card, .planning-step,
 .events-filter-panel, .event-search-form, .venue-search-form, .venue-search-heading,
-.testimonial, .testimonial-grid > *, .review-form, .rating-picker, .preview-card,
-.panel, .stat-card, .chart-panel, .theme-panel, .smart-theme-box, .modal-card,
+.testimonial, .testimonial-grid > *, .review-form, .rating-picker,
+.panel, .stat-card, .chart-panel, .modal-card,
 .login-required-card, .profile-card, .login-card, .about-intro-highlight,
 .auth-demo-note, .venue-demo-note, .venue-booking-note, .venue-gallery-note,
 .booking-list > *, .booking-card, .enquiry-card, .welcome-banner, .info-card, .dashboard-card {
@@ -283,16 +283,16 @@ a:hover { color: #dcff8a; }
 
 /* Tabs / pills / filters */
 .tabs, .tab-list, .events-filter-panel, .category-nav, .event-category-links, .venue-category-links,
-.theme-presets, .filter-bar {
+.filter-bar {
   background: rgba(30, 24, 15, .55) !important; border: 1px solid var(--ew-lime-line) !important;
   border-radius: 999px; padding: 6px;
 }
-.event-category-link, .tab, .tab-btn, .filter-chip, .theme-preset {
+.event-category-link, .tab, .tab-btn, .filter-chip {
   background: transparent !important; color: var(--ew-text-2) !important;
   border: 1px solid transparent !important; border-radius: 999px !important;
 }
-.event-category-link:hover, .tab:hover, .tab-btn:hover, .filter-chip:hover, .theme-preset:hover,
-.event-category-link.active, .tab.active, .tab-btn.active, .filter-chip.active, .theme-preset.active {
+.event-category-link:hover, .tab:hover, .tab-btn:hover, .filter-chip:hover,
+.event-category-link.active, .tab.active, .tab-btn.active, .filter-chip.active {
   background: var(--ew-lime) !important; color: #0b1004 !important;
 }
 
@@ -555,9 +555,6 @@ hr { border-color: var(--ew-lime-line) !important; }
 .panel-heading { background: transparent !important; border-bottom: 1px solid var(--ew-lime-line) !important; }
 .admin-footer { background: transparent !important; color: var(--ew-muted) !important; }
 .live-indicator { color: var(--ew-lime) !important; }
-.color-row, .swatches, .theme-layout, .preview-window, .preview-sidebar, .preview-panel, .preview-content, .preview-button {
-  background: var(--ew-glass) !important; border-color: var(--ew-lime-line) !important; color: var(--ew-text-2) !important;
-}
 .admin-login-page, .login-container { background: transparent !important; }
 .login-card { padding: 36px !important; }
 

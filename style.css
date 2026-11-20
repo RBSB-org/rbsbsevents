@@ -6253,8 +6253,7 @@ select:focus-visible {
 }
 
 
-/* GLOBAL PUBLISHED THEME TOKENS
-   Values are loaded from Firebase by site-theme.js on every public page. */
+/* COLOUR TOKEN ALIASES */
 :root {
     --white: var(--surface);
     --ivory: var(--page-bg);

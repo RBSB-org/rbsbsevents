@@ -242,7 +242,7 @@ h1, h2, h3, p, a, li, td, th, label, button { overflow-wrap: anywhere; }
 
   /* Dashboard grids */
   .stats-grid { grid-template-columns: repeat(2, minmax(0, 1fr)) !important; }
-  .charts-grid, .theme-layout, .two-column, .form-grid { grid-template-columns: minmax(0, 1fr) !important; }
+  .charts-grid, .two-column, .form-grid { grid-template-columns: minmax(0, 1fr) !important; }
   .chart-card canvas, .chart-container { max-width: 100%; }
 
   /* Tables scroll inside their card, not the page */

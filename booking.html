@@ -10,7 +10,6 @@
     <meta name="description"
         content="Submit your event booking enquiry with EventWale and share your celebration requirements.">
 
-    <script src="theme-cache.js"></script>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="motion.css">
 
@@ -927,58 +926,8 @@ if (typeof window.sendBookingConfirmation === "function") {
         });
     </script>
 <script type="module" src="auth-nav.js"></script>
-<!-- EVENTWALE GLOBAL THEME LOADER -->
-<script>
-(function () {
-    const THEME_KEY = "rbsbAdminTheme";
-
-    function loadRBSBTheme() {
-        let savedTheme;
-
-        try {
-            savedTheme = localStorage.getItem(THEME_KEY);
-        } catch (error) {
-            console.error("RBSB theme storage unavailable:", error);
-            return;
-        }
-
-        if (!savedTheme) return;
-
-        try {
-            const theme = JSON.parse(savedTheme);
-            const root = document.documentElement;
-
-            if (theme.primary) {
-                root.style.setProperty("--primary", theme.primary);
-                root.style.setProperty("--primary-color", theme.primary);
-                root.style.setProperty("--navy", theme.primary);
-                root.style.setProperty("--navy-light", theme.primary);
-            }
-
-            if (theme.accent) {
-                root.style.setProperty("--accent", theme.accent);
-                root.style.setProperty("--accent-color", theme.accent);
-                root.style.setProperty("--gold", theme.accent);
-                root.style.setProperty("--gold-light", theme.accent);
-            }
-
-            if (theme.background) {
-                root.style.setProperty("--page-bg", theme.background);
-                root.style.setProperty("--background-color", theme.background);
-                root.style.setProperty("--ivory", theme.background);
-            }
-
-        } catch (error) {
-            console.error("Could not load RBSB theme:", error);
-        }
-    }
-
-    loadRBSBTheme();
-})();
-</script>
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script src="email.js"></script>
-    <script type="module" src="./site-theme.js"></script>
     <script src="smart-enhancements.js" defer></script>
 <script src="booking-service-prefill.js" defer></script>
 <script src="mobile-nav.js" defer></script>

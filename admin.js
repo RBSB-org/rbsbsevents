@@ -4,7 +4,7 @@ import { ref, get, push, set, update, remove, onValue } from "https://www.gstati
 
 // =====================================
 // RBSB Events ADMIN PANEL - FIXED
-// Navigation + Theme + Modal + Mobile
+// Navigation + Modal + Mobile
 // =====================================
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -54,10 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
         analytics: {
             title: "Platform Analytics",
             subtitle: "Understand bookings and platform activity."
-        },
-        theme: {
-            title: "Theme Customizer",
-            subtitle: "Personalize your admin dashboard."
         }
     };
 
@@ -157,138 +153,6 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // =====================================
-    // GLOBAL WEBSITE + ADMIN THEME CUSTOMIZER
-    const themeDefaults = {
-        primary: "#14243A", accent: "#C5A46D", background: "#FAF8F3",
-        surface: "#FFFFFF", text: "#273444", muted: "#667085", border: "#E7E2D8",
-        siteName: "EventWale"
-    };
-    const themeFields = {
-        primary: "sidebarColor", accent: "accentColor", background: "backgroundColor",
-        surface: "surfaceColor", text: "textColor", muted: "mutedColor", border: "borderColor"
-    };
-    const themeMessage = document.getElementById("themeMessage");
-    const themeValues = { ...themeDefaults };
-    const validHex = value => /^#[0-9a-f]{6}$/i.test(String(value || ""));
-    function applyTheme(theme) {
-        Object.entries(themeFields).forEach(([key, id]) => {
-            const value = validHex(theme[key]) ? theme[key] : themeDefaults[key];
-            themeValues[key] = value;
-            document.documentElement.style.setProperty(`--${key === "background" ? "page-bg" : key}`, value);
-            const input = document.getElementById(id);
-            if (input) input.value = value;
-        });
-        const nameInput = document.getElementById("siteNameInput");
-        if (nameInput) nameInput.value = theme.siteName || themeDefaults.siteName;
-        const adminBrand = document.querySelector(".brand h2");
-        // The EventWale logo in the sidebar is a fixed brand asset; do not overwrite it.
-        document.querySelectorAll("[data-theme]").forEach(button => {
-            button.classList.toggle("active", button.dataset.theme === theme.preset);
-        });
-    }
-    const presets = {
-        navy: { ...themeDefaults, preset: "navy" },
-        purple: { ...themeDefaults, primary: "#30204D", accent: "#B69AF8", background: "#F7F3FF", preset: "purple" },
-        forest: { ...themeDefaults, primary: "#173D32", accent: "#83C5A1", background: "#F2F7F1", preset: "forest" },
-        midnight: { ...themeDefaults, primary: "#17191F", accent: "#65C7D0", background: "#20232B", surface: "#292D37", text: "#F4F5F7", muted: "#B7BECA", border: "#414754", preset: "midnight" }
-    };
-    let selectedTheme = { ...themeDefaults, preset: "navy" };
-    applyTheme(selectedTheme);
-    Object.entries(themeFields).forEach(([key, id]) => {
-        const input = document.getElementById(id);
-        if (input) input.addEventListener("input", () => {
-            selectedTheme = { ...selectedTheme, [key]: input.value, preset: "" };
-            applyTheme(selectedTheme);
-            if (themeMessage) themeMessage.textContent = "Live preview updated. Save to publish across the website.";
-        });
-    });
-    const siteNameInput = document.getElementById("siteNameInput");
-    if (siteNameInput) siteNameInput.addEventListener("input", () => {
-        selectedTheme.siteName = siteNameInput.value.trim().slice(0, 40) || "EventWale";
-    });
-    document.querySelectorAll("[data-theme]").forEach(button => button.addEventListener("click", () => {
-        if (presets[button.dataset.theme]) {
-            selectedTheme = { ...presets[button.dataset.theme] };
-            applyTheme(selectedTheme);
-        }
-    }));
-    // Prompt-based theme suggestions: local design recipes, no external AI/API.
-    let pendingSuggestedTheme = null;
-    const themePrompt = document.getElementById("themePrompt");
-    const suggestThemeBtn = document.getElementById("suggestThemeBtn");
-    const suggestionPreview = document.getElementById("themeSuggestionPreview");
-    const themeRecipes = [
-        { keys: ["royal", "wedding", "luxury", "regal"], name: "Royal Wedding", description: "Deep plum, champagne and warm ivory for an elegant celebration.", colors: ["#352044", "#D7B77A", "#FBF7F0", "#FFFFFF", "#30283A", "#766B7B", "#E9DFD2"] },
-        { keys: ["pastel", "garden", "floral", "spring"], name: "Pastel Garden", description: "Soft sage, blush and airy cream for a fresh garden feel.", colors: ["#405B50", "#D99DA5", "#FAF7F1", "#FFFFFF", "#303C36", "#78847D", "#E8E2D8"] },
-        { keys: ["black", "gold", "premium", "dark", "night"], name: "Black & Gold Luxe", description: "A dramatic dark palette with refined gold accents.", colors: ["#17191F", "#D4AF65", "#20232B", "#292D37", "#F4F5F7", "#B7BECA", "#414754"] },
-        { keys: ["blue", "ocean", "corporate", "professional"], name: "Ocean Elegance", description: "Confident navy with cool blue and clean white surfaces.", colors: ["#183653", "#64A9C6", "#F3F8FB", "#FFFFFF", "#203344", "#718394", "#DCE6EC"] },
-        { keys: ["purple", "modern", "creative", "lavender"], name: "Modern Lavender", description: "Contemporary violet with soft lilac highlights.", colors: ["#30204D", "#B69AF8", "#F7F3FF", "#FFFFFF", "#30283A", "#756B83", "#E7DFF1"] }
-    ];
-    if (suggestThemeBtn) suggestThemeBtn.addEventListener("click", () => {
-        const prompt = (themePrompt?.value || "").trim().toLowerCase();
-        if (!prompt) { if (themeMessage) themeMessage.textContent = "Describe the theme you want first."; return; }
-        const recipe = themeRecipes.find(item => item.keys.some(key => prompt.includes(key))) || themeRecipes[0];
-        const [primary, accent, background, surface, text, muted, border] = recipe.colors;
-        pendingSuggestedTheme = { ...themeDefaults, primary, accent, background, surface, text, muted, border, preset: "" };
-        document.getElementById("themeSuggestionName").textContent = recipe.name;
-        document.getElementById("themeSuggestionDescription").textContent = recipe.description;
-        document.getElementById("themeSuggestionSwatches").innerHTML = recipe.colors.slice(0, 4).map(color => `<span title="${color}" style="width:42px;height:28px;border-radius:7px;background:${color};border:1px solid #999"></span>`).join("");
-        suggestionPreview.style.display = "block";
-    });
-    const approveSuggestedTheme = document.getElementById("approveSuggestedTheme");
-    if (approveSuggestedTheme) approveSuggestedTheme.addEventListener("click", () => {
-        if (!pendingSuggestedTheme) return;
-        selectedTheme = { ...pendingSuggestedTheme };
-        applyTheme(selectedTheme);
-        if (themeMessage) themeMessage.textContent = "Suggested theme applied as a preview. Click Save Theme to publish it.";
-    });
-
-    async function saveGlobalTheme(theme) {
-        const clean = { ...theme };
-        delete clean.preset;
-        clean.siteName = String(clean.siteName || "EventWale").trim().slice(0, 40) || "EventWale";
-        clean.updatedAt = Date.now();
-        await set(ref(db, "siteSettings/theme"), clean);
-        try { localStorage.setItem("rbsb_site_theme_v1", JSON.stringify(clean)); } catch (cacheError) { console.warn("Theme cache unavailable:", cacheError); }
-        selectedTheme = { ...theme, ...clean };
-        applyTheme(selectedTheme);
-    }
-    const saveThemeBtn = document.getElementById("saveThemeBtn");
-    if (saveThemeBtn) saveThemeBtn.addEventListener("click", async () => {
-        saveThemeBtn.disabled = true;
-        try {
-            await saveGlobalTheme(selectedTheme);
-            if (themeMessage) themeMessage.textContent = "Website theme published successfully.";
-            showToast("Website theme saved and published.");
-        } catch (error) {
-            console.error("Theme save failed:", error);
-            showToast("Theme save failed. Check Firebase admin write rules.");
-            if (themeMessage) themeMessage.textContent = "Could not publish theme. Check Firebase permissions.";
-        } finally { saveThemeBtn.disabled = false; }
-    });
-    const resetThemeBtn = document.getElementById("resetThemeBtn");
-    if (resetThemeBtn) resetThemeBtn.addEventListener("click", async () => {
-        selectedTheme = { ...themeDefaults, preset: "navy" };
-        applyTheme(selectedTheme);
-        try {
-            await saveGlobalTheme(selectedTheme);
-            if (themeMessage) themeMessage.textContent = "Default website theme restored.";
-            showToast("Default website theme restored.");
-        } catch (error) {
-            console.error(error);
-            showToast("Could not reset theme. Check Firebase permissions.");
-        }
-    });
-    // Load the published theme from Firebase so admin and public pages stay in sync.
-    onValue(ref(db, "siteSettings/theme"), snapshot => {
-        const saved = snapshot.val();
-        if (saved && typeof saved === "object") {
-            selectedTheme = { ...themeDefaults, ...saved };
-            try { localStorage.setItem("rbsb_site_theme_v1", JSON.stringify(selectedTheme)); } catch (cacheError) { console.warn("Theme cache unavailable:", cacheError); }
-            applyTheme(selectedTheme);
-        }
-    }, error => console.warn("Could not read site theme:", error));
-
     // ADD CONTENT MODAL
     // =====================================
 
